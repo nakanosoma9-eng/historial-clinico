@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial Clínico Simplificado (PROYECTO IPN-UPIIT)</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <div class="container my-5">
+        <header class="pb-3 mb-4 border-bottom text-center">
+            <h1 class="text-primary">Sistema de Historial Clínico Simplificado</h1>
+            <p class="text-muted"><h9>Proyecto Final - Algoritmos y Estructuras de Datos</h9></p>
+        </header>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header bg-success text-white">Registrar / Actualizar Paciente</div>
+                    <div class="card-body">
+                        <form action="/agregar" method="POST">
+                            <div class="mb-3">
+                                <label class="form-label">ID Único (Número)</label>
+                                <input type="number" name="id" class="form-control" required min="1">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Nombre Completo</label>
+                                <input type="text" name="nombre" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Edad</label>
+                                <input type="number" name="edad" class="form-control" required min="0" max="120">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Diagnóstico</label>
+                                <input type="text" name="diagnostico" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-success w-100">Guardar Paciente</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header bg-primary text-white">Búsqueda de Expediente</div>
+                    <div class="card-body">
+                        <form action="/buscar" method="POST" class="mb-3">
+                            <div class="input-group">
+                                <input type="number" name="id_busqueda" class="form-control" placeholder="ID del paciente..." required>
+                                <button type="submit" class="btn btn-primary">Buscar</button>
+                            </div>
+                        </form>
+
+                        <div class="alert alert-info border-info mt-3">
+                            <h6>Métricas del Experimento ID:</h6>
+                            <hr>
+                            <p class="mb-1"><strong>Tiempo BST:</strong>  se mostrara el tiempo en este apartado </p>
+                            <p class="mb-1"><strong>Tiempo Secuencial:</strong>  tiempo secuencial </p>
+                            <p class="mb-0 text-success"><strong>Rendimiento:</strong> El BST es: </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm">
+                    <div class="card-header bg-dark text-white">Estadísticas Breves (Diagnósticos)</div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span class="badge bg-secondary rounded-pill"> total </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card mb-4 shadow-sm" style="max-height: 500px; overflow-y: auto;">
+                    <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+                        <span>Base de Datos de la clinica</span>
+                        <span class="badge bg-light text-dark">Pacientes</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover mb-0">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Edad</th>
+                                    <th>Diagnóstico</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong> id </strong></td>
+                                    <td><a href="#" onclick="window.open('/paciente/{{ p.id }}', 'popup', 'width=600,height=400'); return false;"> nombre </a></td>
+                                    <td> edad </td>
+                                    <td><span class="badge bg-info text-dark">diagnostico</span></td>
+                                    <td>
+                                        <a href="/eliminar/{{ p.id }}" class="btn btn-danger btn-sm">Eliminar</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm">
+                    <div class="card-header bg-warning text-dark">Historial de Búsquedas (Lista Doblemente Ligada: Recientes primero)</div>
+                    <div class="card-body" style="max-height: 250px; overflow-y: auto;">
+                        <div class="list-group">
+                            <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                <div>
+                                    <small class="text-muted d-block">fecha</small>
+                                    <strong>ID Consultado:</strong> id buscado 
+                                </div>
+                                <span class="badge {% if 'Encontrado' in h.resultado %}bg-success{% else %}bg-danger{% endif %}">
+                                    resultado 
+                                </span>
+                            </div>
+                        </div>
+                        <p class="text-muted text-center my-3">No se han realizado búsquedas en esta sesión.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
